@@ -1,47 +1,21 @@
 class Solution {
-    
-    int[] nums;
-    public int binary(int lo, int key, int hi){
-        int mid;
-        while(lo <= hi){
-            mid = lo + (hi-lo)/2;
-            if(nums[mid] == key) return mid;
-            else if(nums[mid] > key) hi = mid-1;
-            else lo = mid+1;
+  public List<List<Integer>> threeSum(int[] num) {
+    Arrays.sort(num);
+    List<List<Integer>> res = new LinkedList<>(); 
+    for (int i = 0; i < num.length-2; i++) {
+        if (i == 0 || (i > 0 && num[i] != num[i-1])) {
+            int lo = i+1, hi = num.length-1, sum = 0 - num[i];
+            while (lo < hi) {
+                if (num[lo] + num[hi] == sum) {
+                    res.add(Arrays.asList(num[i], num[lo], num[hi]));
+                    while (lo < hi && num[lo] == num[lo+1]) lo++;
+                    while (lo < hi && num[hi] == num[hi-1]) hi--;
+                    lo++; hi--;
+                } else if (num[lo] + num[hi] < sum) lo++;
+                else hi--;
+           }
         }
-        
-        return -1;
     }
-    
-    
-    public List<List<Integer>> threeSum(int[] nums) {
-      
-        List<List<Integer>> result = new ArrayList<>();
-        Set<List<Integer>> set = new HashSet<>();
-        int len = nums.length;
-        Arrays.sort(nums);
-        this.nums = nums;
-        
-        for(int i = 0; i<len-2; i++){
-            int a = nums[i];
-            for(int j = i+1; j<len-1; j++){
-                int b = nums[j];
-                int target = -a-b;
-                int k = binary(j+1, target, len-1);
-                if(k != -1){
-                    List<Integer> result_temp = new ArrayList<>();
-                    result_temp.add(a);
-                    result_temp.add(b);
-                    result_temp.add(nums[k]);
-                    if(!set.contains(result_temp))
-                        {
-                         result.add(result_temp);
-                         set.add(result_temp);
-                        }
-                }
-            }
-        }
-        
-        return result;
-    }
+    return res;
+}
 }
