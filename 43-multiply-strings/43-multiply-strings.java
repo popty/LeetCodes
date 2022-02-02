@@ -1,6 +1,6 @@
 class Solution {
     public String multiply(String num1, String num2) {
-         int m = num1.length(), n = num2.length();
+          int m = num1.length(), n = num2.length();
     int[] pos = new int[m + n];
    
     for(int i = m - 1; i >= 0; i--) {
@@ -17,6 +17,5 @@ class Solution {
     StringBuilder sb = new StringBuilder();
     for(int p : pos) if(!(sb.length() == 0 && p == 0)) sb.append(p);
     return sb.length() == 0 ? "0" : sb.toString();
-        
     }
 }
