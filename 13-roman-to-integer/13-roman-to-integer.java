@@ -9,43 +9,61 @@ class Solution {
         map.put('D', 500);
         map.put('M', 1000);
         
-        int index = s.length() - 1;
         int res = 0;
-        char prev = ' ';
         
-        while(index > -1){
-            char c = s.charAt(index);
-            if(prev == ' '){
-                res+=map.get(c);
-                prev = c;
-                index--;
-                continue;
+        for(int i=0; i<s.length(); i++){
+            char c = s.charAt(i);
+            if(c == 'I'){
+                if(i!=s.length()-1 && s.charAt(i+1) == 'V'){
+                    res+=4;
+                    i++;
+                    continue;
+                }
+                if(i!=s.length()-1 && s.charAt(i+1) == 'X'){
+                    res+=9;
+                    i++;
+                    continue;
+                }
+                else{
+                    res+=map.get('I');
+                }
             }
             
-            else if(prev == 'V' || prev == 'X'){
-                if(c == 'I')res-=1;
-                else res+=map.get(c);
+            else if(c == 'X'){
+                if(i!= s.length()-1 && s.charAt(i+1) == 'L'){
+                    res+=40;
+                    i++;
+                    continue;
+                }
+                if(i!= s.length()-1 && s.charAt(i+1) == 'C'){
+                    res+=90;
+                    i++;
+                    continue;
+                }else{
+                    res+=map.get('X');
+                }
             }
             
-            else if(prev == 'L' || prev == 'C'){
-                if(c == 'X')res-=10;
-                else res+=map.get(c);
-            }
-            
-            else if(prev == 'D' || prev == 'M'){
-                if(c == 'C')res-=100;
-                else res+=map.get(c);
+            else if(c == 'C'){
+                if(i!=s.length()-1 && s.charAt(i+1) == 'D'){
+                    res+=400;
+                    i++;
+                    continue;
+                }
+                if(i!=s.length()-1 && s.charAt(i+1) == 'M'){
+                    res+=900;
+                    i++;
+                    continue;
+                }else{
+                    res+=map.get('C');
+                }
             }
             
             else{
                 res+=map.get(c);
             }
-            
-            prev = c;
-            index--;
         }
         
         return res;
-        
     }
 }
