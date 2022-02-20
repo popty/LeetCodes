@@ -1,12 +1,22 @@
 class Solution {
     public List<String> fizzBuzz(int n) {
-        List<String> strArr = new ArrayList();
+        String[] strArr = new String[n];
         for(int i = 1; i<=n; i++){
-            if(i%15 == 0)strArr.add("FizzBuzz");
-            else if(i%5 == 0)strArr.add("Buzz");
-            else if(i%3 == 0)strArr.add("Fizz");
-            else strArr.add(i+"");
+            strArr[i-1] = i+"";
         }
-        return strArr;
+        
+        for(int i = 2; i<n; i+=3){
+            strArr[i] = "Fizz";
+        }
+        
+        for(int i = 4; i<n; i+=5){
+            strArr[i] = "Buzz";
+        }
+        
+        for(int i = 14; i<n; i+=15){
+            strArr[i] = "FizzBuzz";
+        }
+        
+        return Arrays.asList(strArr);
     }
 }
