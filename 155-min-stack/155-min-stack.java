@@ -3,13 +3,11 @@ class MinStack {
     class Node{
         int val;
         int minSoFar;
-        Node next; 
-        Node prev;
+        Node next;
         
         Node(int val){
             this.val = val;
             this.next = null;
-            this.prev = null;
             this.minSoFar = Integer.MAX_VALUE;
         }
     }
@@ -21,8 +19,7 @@ class MinStack {
     
     public void push(int val) {
         Node node = new Node(val);
-        this.head.next = node;
-        node.prev = head;
+        node.next = head;
         if(val < this.head.minSoFar){
             node.minSoFar = val;
         }else{
@@ -30,23 +27,20 @@ class MinStack {
         }
         
         
-        this.head = this.head.next;
+       head = node;
     }
     
     public void pop() {
-        System.out.println("Popping head "+head.val);
-        this.head = head.prev;
-        
-        this.head.next = null;
+       head = head.next;
     }
     
     public int top() {
-        return this.head.val;
+        return head.val;
         
     }
     
     public int getMin() {
-        return this.head.minSoFar;    
+        return head.minSoFar;    
     }
 }
 
