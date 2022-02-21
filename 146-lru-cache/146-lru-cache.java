@@ -3,55 +3,62 @@ class LRUCache {
     class Node{
         int key;
         int val;
-        Node prev;
         Node next;
+        Node prev;
         
         public Node(){
             this.key = 0;
             this.val = 0;
-            this.prev = null;
             this.next = null;
+            this.prev = null;
         }
+        
         public Node(int key, int val){
             this.key = key;
             this.val = val;
-            this.prev = null;
             this.next = null;
+            this.prev = null;
+            
         }
+        
     }
     
     HashMap<Integer, Node> map;
     Node head;
     Node tail;
-    int capacity = 0;
+    int capacity;
     int size = 0;
     
     public LRUCache(int capacity) {
         map = new HashMap<>();
-        this.capacity = capacity;
         head = new Node();
         tail = new Node();
+        
         head.prev = tail;
         tail.next = head;
+        
+        this.capacity = capacity;
     }
     
     public int get(int key) {
-        if(!map.containsKey(key))return -1;
+        if(!map.containsKey(key)) return -1;
         
         Node node = map.get(key);
         remove(node);
-        insert(node);
-        return node.val;
+        insertAtHead(node);
         
+        return node.val;
     }
     
+    
+    // 1:2, 2:3, 3:4, 4:5, 
     public void put(int key, int value) {
         if(map.containsKey(key)){
             Node node = map.get(key);
             node.val = value;
             map.put(key, node);
             remove(node);
-            insert(node);
+            insertAtHead(node);
             return;
         }
         
@@ -62,16 +69,16 @@ class LRUCache {
         }
         
         Node node = new Node(key, value);
+        insertAtHead(node);
         map.put(key, node);
-        insert(node);
         size++;
     }
     
-    public void insert(Node node){
+    public void insertAtHead(Node node){
         Node temp = head.prev;
         temp.next = node;
-        node.next = head;
         node.prev = temp;
+        node.next = head;
         head.prev = node;
     }
     
@@ -82,18 +89,18 @@ class LRUCache {
         next_.prev = prev_;
         node.next = null;
         node.prev = null;
+        
     }
     
     public Node evict(){
         Node temp = tail.next;
-        temp.next.prev = tail;
         tail.next = temp.next;
-        
+        temp.next.prev = tail;
         temp.next = null;
         temp.prev = null;
         
         return temp;
-        
+            
     }
 }
 
