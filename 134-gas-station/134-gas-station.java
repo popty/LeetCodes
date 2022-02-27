@@ -13,7 +13,7 @@ class Solution {
                 start = i+1;
             }
         }
-        return (total_surplus < 0) ? -1 : start;
-       
+        return total_surplus < 0 ? -1 : start;
+        
     }
 }
