@@ -1,19 +1,24 @@
 class Solution {
     public void wiggleSort(int[] nums) {
-        PriorityQueue<Integer> pq_min = new PriorityQueue<>();
-        PriorityQueue<Integer> pq_max = new PriorityQueue<>((n1, n2)->n2-n1);
-        
-        for(int num: nums){
-            pq_min.offer(num);
-            pq_max.offer(num);
+        boolean less = true;
+        for(int i = 0; i<nums.length-1; i++){
+            if(less){
+                if(nums[i] > nums[i+1]){
+                    swap(nums, i, i+1);
+                }
+            }else{
+                if(nums[i] < nums[i+1]){
+                    swap(nums, i, i+1);
+                }
+            }
+            
+            less = !less;
         }
-        
-        int i = 0;
-        while(i<nums.length){
-            nums[i] = i%2==0 ? pq_min.poll() : pq_max.poll(); 
-            i++;
-        }
-        
-        return;
+    }
+    
+    private void swap(int[] nums, int i , int j){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }
