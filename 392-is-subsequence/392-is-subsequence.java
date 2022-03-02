@@ -1,23 +1,35 @@
 class Solution {
     public boolean isSubsequence(String s, String t) {
         
-        if(s.length() == 0) return true;
+        HashMap<Character, List<Integer>> map = new HashMap<>();
         
-        if(t.length() == 0) return false;
-        
-        int i = 0, j = 0;
-        while(j < t.length()){
-            if(s.charAt(i) == t.charAt(j)){
-                i++;
-            }
-            
-            if(i == s.length())return true;
-            
-            j++;
+        for(int i = 0; i<t.length(); i++){
+            List<Integer> temp = map.getOrDefault(t.charAt(i), new ArrayList<>());
+            temp.add(i);
+            map.put(t.charAt(i), temp);
         }
         
         
-        return false;
+        Integer current = -1;
+        for(int i = 0; i<s.length(); i++){
+            char c = s.charAt(i);
+            if(!map.containsKey(c))return false;
+            
+            boolean isMatch = false;
+            
+            for(Integer index :  map.get(c)){
+                if(current < index){
+                    current = index;
+                    isMatch = true;
+                    break;
+                }
+            }
+               
+             if(!isMatch) return false;
+            
+        }
+        
+        return true;
         
     }
 }
