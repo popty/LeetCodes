@@ -1,32 +1,23 @@
 class Solution {
     
-    int n;
-  
-    private void helper(List<String> result, int open, int close, String sb){
-     
-       if(sb.length() == 2*n){
-           result.add(sb);
-           return;
-       }
+    private void helper(List<String> par, int open, int close, String str, int n){
+        if(str.length() == 2*n){
+            par.add(str);
+            return;
+        }
         
-       if(open < n){
-           helper(result, open+1, close, sb+"(");
-       }
+        if(open < n){
+            helper(par, open+1, close, str+ "(", n);
+        }
         
-      if(close < open){
-          helper(result, open, close+1, sb+")");
-      }
-        
-     
-      
-       return;
-       
+        if(close < open){
+            helper(par, open, close+1, str+")", n);
+        }
     }
     
     public List<String> generateParenthesis(int n) {
-        List<String> result = new ArrayList<>();
-        this.n = n;
-        helper(result, 0, 0, new String());
-        return result;
+        List<String> par = new ArrayList<>();
+        helper(par, 0, 0, "", n);
+        return par;
     }
 }
