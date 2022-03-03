@@ -6,14 +6,12 @@ class Solution {
                       LinkedList<Integer> tempList){
         
         
-        
         if(target < 0 || index >= candidates.length) return;
         
         if(target == 0){
             list.add(new ArrayList<>(tempList));
             return;
         }
-        
        
         for(int i = index; i<candidates.length; i++){
             tempList.add(candidates[i]);
@@ -21,13 +19,7 @@ class Solution {
             tempList.removeLast();
         }
        
-        
-        
-        
-        return;
-        
-        
-        
+        return;        
     }
     
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
