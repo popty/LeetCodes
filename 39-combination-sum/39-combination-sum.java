@@ -1,31 +1,41 @@
 class Solution {
+    
     int[] candidates;
     
-    protected void backtrack(
-        int remain,
-        LinkedList<Integer> comb, 
-        int start, 
-        List<List<Integer>> results){
-        if(remain == 0){
-            results.add(new ArrayList<>(comb));
+    public void helper(List<List<Integer>> list, int target, int index, 
+                      LinkedList<Integer> tempList){
+        
+        
+        
+        if(target < 0 || index >= candidates.length) return;
+        
+        if(target == 0){
+            list.add(new ArrayList<>(tempList));
             return;
         }
         
-        if(remain < 0) return;
-        
-        for(int i = start; i< candidates.length; i++){
-            comb.add(candidates[i]);
-            backtrack(remain-candidates[i], comb, i, results);
-            comb.removeLast();
+       
+        for(int i = index; i<candidates.length; i++){
+            tempList.add(candidates[i]);
+            helper(list, target - candidates[i], i, tempList);
+            tempList.removeLast();
         }
+       
+        
+        
+        
+        return;
+        
+        
+        
     }
     
-    
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        
         this.candidates = candidates;
-        List<List<Integer>> results = new ArrayList<>();
-        LinkedList<Integer> comb = new LinkedList<Integer>();
-        backtrack(target, comb, 0, results);
-        return results;
+        List<List<Integer>> list = new ArrayList<>();
+        LinkedList<Integer> tempList = new LinkedList<>();
+        helper(list, target, 0, tempList);
+        return list;
     }
 }
