@@ -1,30 +1,34 @@
 class Solution {
+    
+    private void swap(int[] nums, int i, int j ){
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
+    
+    private int partition(int[] nums, int start, int end){
+        int i = start+1;
+        int pivot = nums[start];
+        for(int j = start+1; j<=end; j++){
+            if(nums[j] < pivot){
+                swap(nums, j, i);
+                i+=1;
+            }
+        }
+        
+        swap(nums, start, i-1);
+        return i-1;
+    }
+    
+    private void quicksort(int[] nums, int start, int end){
+        if(start < end){
+            int pivot_ind = partition(nums, start, end);
+            quicksort(nums, start, pivot_ind-1);
+            quicksort(nums, pivot_ind+1, end);
+        }
+    }
+    
     public void sortColors(int[] nums) {
-        int red  =0;
-        int white = 0;
-        int blue = 0;
-        for(int num: nums){
-            if(num == 0) red++;
-            if(num == 1) white++;
-            if(num == 2) blue++;
-        }
-        
-        for(int i = 0; i<nums.length; i++){
-            if(red != 0){
-                nums[i] = 0;
-                red--;
-            }
-            else if(white!=0){
-                nums[i] = 1;
-                white--;
-            }
-            
-            else if(blue !=0){
-                nums[i] = 2;
-                blue--;
-            }
-        }
-        
-        return;
+        quicksort(nums, 0, nums.length-1);
     }
 }
