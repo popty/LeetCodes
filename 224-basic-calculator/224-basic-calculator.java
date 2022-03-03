@@ -3,26 +3,32 @@ class Solution {
         Queue<Character> tokens = new LinkedList<>();
         
         for(char c: s.toCharArray()){
-            if(c!= ' ')tokens.offer(c);
+            if(c!=' ')tokens.add(c);
         }
-        
         tokens.offer('+');
-        return calc(tokens);
+        return calculate(tokens);
+        
     }
     
-    private int calc(Queue<Character> tokens){
+    private int calculate(Queue<Character> tokens){
+        
+        int last = 0, num = 0, sum = 0;
         char preop = '+';
-        int last = 0, sum = 0, num = 0;
+        
         while(!tokens.isEmpty()){
+            
             char c = tokens.poll();
-            while(!tokens.isEmpty() && c >='0' && c<='9'){
+            
+            while(!tokens.isEmpty() && c>='0' && c<='9'){
                 num = num*10 + c - '0';
                 c = tokens.poll();
             }
             
             if(c == '('){
-                num = calc(tokens);
+                num = calculate(tokens);
             }
+            
+            
             
             else{
                 switch(preop){
@@ -38,11 +44,11 @@ class Solution {
                 
                 if(c == ')') break;
                 
-                
-                preop = c;
                 num = 0;
+                preop = c;
             }
         }
-        return sum + last;
+        
+        return sum+last;
     }
 }
