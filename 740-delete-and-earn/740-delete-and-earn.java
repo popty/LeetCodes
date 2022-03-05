@@ -29,7 +29,14 @@ class Solution {
             map.put(num, sumSoFar);
         }
         
-        return helper(maxNumber);
+        cache.put(0, 0);
+        cache.put(1, map.getOrDefault(1, 0));
+        for(int i = 2; i<=maxNumber; i++){
+            int gain = map.getOrDefault(i, 0);
+            cache.put(i, Math.max(cache.get(i-1), gain+cache.get(i-2)));
+        }
+        
+        return cache.get(maxNumber);
         
     }
 }
