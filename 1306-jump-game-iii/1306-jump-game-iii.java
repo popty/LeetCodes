@@ -1,26 +1,12 @@
 class Solution {
+    HashSet<Integer> set = new HashSet<>();
     
     public boolean canReach(int[] arr, int start) {
-        Queue<Integer> queue = new LinkedList<>();
-        HashSet<Integer> visited = new HashSet<>();
+        if(start < 0 || start >= arr.length || set.contains(start)) return false;
         
-        queue.add(start);
-        while(!queue.isEmpty()){
-            int node = queue.poll();
-            if(arr[node] == 0) return true;
-            visited.add(node);
-            if(node+arr[node]< arr.length 
-               && !visited.contains(node+arr[node])){
-                queue.add(node+arr[node]);
-            }
-            
-            if(node-arr[node] >= 0 && !visited.contains(node-arr[node])){
-                queue.add(node-arr[node]);
-            }
-            
-        }
-      
-        return false;
+        set.add(start);
+        
+        return (arr[start] == 0 || canReach(arr, start+arr[start]) || canReach(arr, start-arr[start]));
         
         
     }
