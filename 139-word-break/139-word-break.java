@@ -1,27 +1,19 @@
 class Solution {
     public boolean wordBreak(String s, List<String> wordDict) {
         if(s.length() == 0) return true;
-        Queue<Integer> bfs = new LinkedList<>();
         Set<String> dictSet = new HashSet<>(wordDict);
-        bfs.add(0);
-        boolean[] visited = new boolean[s.length()];
-        while(!bfs.isEmpty()){
-            int node = bfs.poll();
-            
-            if(visited[node]) continue;
-            
-            visited[node] = true;
-            
-            for(int i = node+1; i<=s.length(); i++){
-               
-                if(dictSet.contains(s.substring(node, i))){
-                    bfs.offer(i);
-                    if(i == s.length()) return true;
+        boolean[] dp = new boolean[s.length()+1];
+        Arrays.fill(dp, false);
+        dp[0] = true;
+        for(int i = 1; i<=s.length(); i++){
+            for(int j = 0; j<i; j++){
+                if(dp[j] && dictSet.contains(s.substring(j, i))){
+                    dp[i] = true;
+                    break;
                 }
             }
         }
         
-        return false;
-        
+        return dp[s.length()];
     }
 }
