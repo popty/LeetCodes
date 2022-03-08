@@ -1,53 +1,28 @@
 class Solution {
     
-    List<String> onesList = Arrays.asList("0", "1", "8");
-    List<String> evenList = Arrays.asList("00", "11", "69", "88", "96");
-    
-    
     public List<String> findStrobogrammatic(int n) {
-        List<String> numbers = new ArrayList<>();
-        if(n >= 2){
-           numbers = Arrays.asList("11", "69", "88", "96");
-           n-=2;
-        }
+    return helper(n, n);
+}
+
+List<String> helper(int n, int m) {
+    if (n == 0) return new ArrayList<String>(Arrays.asList(""));
+    if (n == 1) return new ArrayList<String>(Arrays.asList("0", "1", "8"));
+    
+    List<String> list = helper(n - 2, m);
+    
+    List<String> res = new ArrayList<String>();
+    
+    for (int i = 0; i < list.size(); i++) {
+        String s = list.get(i);
         
-        else if(n == 1){
-            numbers = Arrays.asList("0","1","8");
-            return numbers;
-        }
+        if (n != m) res.add("0" + s + "0");
         
-        Queue<String> bfs = new LinkedList<>(numbers);
-        
-        while(n>0){
-            numbers = new ArrayList<>();
-            if(n>=2){
-                while(!bfs.isEmpty()){
-                    String node = bfs.poll();
-                    int len = node.length();
-                    for(String even: evenList){
-                        String child = 
-                            node.substring(0, len/2) + even + node.substring(len/2);
-                        numbers.add(child);
-                    }  
-                }
-                bfs = new LinkedList<>(numbers);
-                n-=2;
-            }
-                else{
-                    while(!bfs.isEmpty()){
-                    String node = bfs.poll();
-                    int len = node.length();
-                    for(String ones: onesList){
-                        String child = 
-                            node.substring(0, len/2) + ones + node.substring(len/2);
-                        numbers.add(child);
-                    }  
-                }
-                bfs = new LinkedList<>(numbers);
-                n-=1;
-                }
-            }
-        
-        return numbers;
+        res.add("1" + s + "1");
+        res.add("6" + s + "9");
+        res.add("8" + s + "8");
+        res.add("9" + s + "6");
     }
+    
+    return res;
+}
 }
