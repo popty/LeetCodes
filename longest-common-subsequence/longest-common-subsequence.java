@@ -19,13 +19,7 @@ class Solution {
     }
     
     public int longestCommonSubsequence(String text1, String text2) {
-        
-        if(text1.length() < text2.length()){
-            String temp = text1;
-            text1 = text2;
-            text2 = temp;
-        }
-        
+      
         this.text1 = text1;
         this.text2 = text2;
         
