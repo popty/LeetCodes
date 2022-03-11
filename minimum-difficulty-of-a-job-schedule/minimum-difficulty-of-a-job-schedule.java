@@ -1,21 +1,21 @@
 class Solution {
+    
+    int[] difficulties;
     int N = 0;
     int[][] memo;
-    int[] difficulties;
     
     private int helper(int ind, int d){
-      
+        
         if(ind == N && d == 0) return 0;
-        
-        if(ind == N || d == 0) return Integer.MAX_VALUE;
-        
+        if(d == 0 || ind == N) return Integer.MAX_VALUE;
         if(memo[ind][d] != -1) return memo[ind][d];
         
+        int curr = 0;
         int min = Integer.MAX_VALUE;
-        int curr = difficulties[ind];
-        for(int schedule = ind; schedule < N; schedule++){
-            curr = Math.max(difficulties[schedule], curr);
-            int temp =  helper(schedule+1, d-1);
+        
+        for(int i = ind; i<N; i++){
+            curr = Math.max(curr, difficulties[i]);
+            int temp = helper(i+1, d-1);
             if(temp != Integer.MAX_VALUE){
                 min = Math.min(min, temp+curr);
             }
@@ -28,17 +28,12 @@ class Solution {
     public int minDifficulty(int[] jobDifficulty, int d) {
         this.N = jobDifficulty.length;
         this.difficulties = jobDifficulty;
-        if(N < d) return -1;
-        memo = new int[N][d+1];
+        if(d > N) return -1;
+        this.memo = new int[N][d+1];
         
-        for(int[] arr: memo){
-            Arrays.fill(arr, -1);
-        }
+        for(int[] row: memo)Arrays.fill(row, -1);
         
         return helper(0, d);
         
     }
-    
-    
-    
 }
