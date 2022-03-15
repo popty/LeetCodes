@@ -11,14 +11,12 @@ class Solution {
         }
         
         for(int i = 1; i<=max_val; i++){
-            int maxEarnedHere = Math.max(maxEarned.getOrDefault(i-1, 0), 
-                                     maxEarned.getOrDefault(i-2, 0)+map.getOrDefault(i, 0));
+            int maxEarnedHere = Math.max(maxEarned.getOrDefault(i-1, 0),
+                            maxEarned.getOrDefault(i-2, 0)+map.getOrDefault(i, 0));
             maxEarned.put(i, maxEarnedHere);
         }
         
-        
         return maxEarned.get(max_val);
-        
         
     }
 }
