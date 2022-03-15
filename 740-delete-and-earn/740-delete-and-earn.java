@@ -1,8 +1,10 @@
 class Solution {
     public int deleteAndEarn(int[] nums) {
             int[] buckets = new int[10001];
+            int max = 0;
             for (int num : nums) {
                 buckets[num] += num;
+                
             }
             int[] dp = new int[10001];
             dp[0] = buckets[0];
