@@ -1,48 +1,24 @@
 class Solution {
-    public int minDominoRotations(int[] tops, int[] bottoms) {
-        int[] topFreq = new int[7];
-        int[] bottomFreq = new int[7];
-        
-        int maxTopFreq = 0;
-        int maxBottomFreq = 0;
-        
-        int maxElemTop = 0;
-        int maxElemBottom = 0;
-        
-        int ans = 0;
-        
-        for(int i = 0; i<tops.length; i++){
-            
-            topFreq[tops[i]]++;
-            bottomFreq[bottoms[i]]++;
-           
-            if(topFreq[tops[i]] > maxTopFreq){
-                maxTopFreq = topFreq[tops[i]];
-                maxElemTop = tops[i];
-            }
-            
-            if(bottomFreq[bottoms[i]] > maxBottomFreq){
-                maxBottomFreq = bottomFreq[bottoms[i]];
-                maxElemBottom = bottoms[i];
-            }
+    public int minDominoRotations(int[] A, int[] B) {
+        int min = Integer.MAX_VALUE;
+        for (int i = 1; i <= 6; i++) {
+            min = Math.min(min, getRotation(A, B, i));
+            min = Math.min(min, getRotation(B, A, i));
         }
-        
-        if(maxTopFreq > maxBottomFreq){
-            for(int i = 0; i<tops.length; i+=1){
-                if(tops[i] != maxElemTop &&
-                   bottoms[i] != maxElemTop) return -1;
-                
-                else if(tops[i]!=maxElemTop) ans++;
+        return min == Integer.MAX_VALUE ? -1 : min;
+    }
+    
+    private int getRotation(int[] A, int[] B, int n) {
+        int res = 0;
+        for (int i = 0; i < A.length; i++) {
+            if (A[i] == n) {
+                continue;
             }
-        }
-        
-        else{
-            for(int i = 0; i<bottoms.length; i++){
-                if(tops[i]!=maxElemBottom && bottoms[i]!=maxElemBottom) return -1;
-                else if(bottoms[i] != maxElemBottom) ans++;
+            if (B[i] != n) {
+                return Integer.MAX_VALUE;
             }
+            res++;
         }
-        
-        return ans;
+        return res;
     }
 }
