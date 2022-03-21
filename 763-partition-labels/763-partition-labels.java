@@ -1,19 +1,24 @@
 class Solution {
-    public List<Integer> partitionLabels(String s) {
-        HashMap<Character, Integer> map = new HashMap<>();
-        for(int i = 0; i<s.length(); i++){
-            map.put(s.charAt(i), i);
+    public List<Integer> partitionLabels(String S) {
+        if(S == null || S.length() == 0){
+            return null;
         }
-        
-        List<Integer> result = new ArrayList<>();
-        int j = 0, anchor = 0;
-        for(int i = 0; i<s.length(); i++){
-            j = Math.max(j, map.get(s.charAt(i)));
-            if(i == j){
-                result.add(i-anchor+1);
-                anchor = i+1;
+        List<Integer> list = new ArrayList<>();
+        int[] map = new int[26];  // record the last index of the each char
+
+        for(int i = 0; i < S.length(); i++){
+            map[S.charAt(i)-'a'] = i;
+        }
+        // record the end index of the current sub string
+        int last = 0;
+        int start = 0;
+        for(int i = 0; i < S.length(); i++){
+            last = Math.max(last, map[S.charAt(i)-'a']);
+            if(last == i){
+                list.add(last - start + 1);
+                start = last + 1;
             }
         }
-        return result;
+        return list;
     }
 }
